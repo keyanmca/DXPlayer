@@ -1,0 +1,8 @@
+﻿<Window x:Name="winAbout" x:Class="DXPlayer.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DXMediaPlayer 정보" Height="160" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid>
+        <TextBox x:Name="txtAbout" Margin="2,2,2,2" TextWrapping="Wrap" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+    </Grid>
+</Window>

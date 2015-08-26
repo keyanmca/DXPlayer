@@ -1,0 +1,106 @@
+﻿<Window x:Name="winMain" x:Class="DXPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="600" Height="450" 
+        MinWidth="400" MinHeight="250" AllowDrop="True"
+        SizeChanged="winMain_SizeChanged" Closing="winMain_Closing"        
+        Loaded="winMain_Loaded" DragEnter="winMain_DragEnter" Drop="winMain_Drop" Activated="winMain_Activated">
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="mitemOpenFile_Click"/>
+    </Window.CommandBindings>
+    
+    <Grid x:Name="gridMain" Width="600" Height="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+        <Menu x:Name="menuMain" Grid.Row="0">
+            <MenuItem Header="미디어">
+                <MenuItem x:Name="mitemOpenFile" Header="파일 열기" Click="mitemOpenFile_Click"/>
+                <MenuItem x:Name="mitemOpenNetwork" Header="네트워크 스트림 열기" Click="mitemOpenNetwork_Click"/>                
+                <MenuItem x:Name="mitemRecentMedia" Header="최근 미디어 열기" MouseEnter="mitemRecentMedia_MouseEnter"/>
+                <MenuItem x:Name="mitemStreaming" Header="스트림하기" Click="mitemStreaming_Click"/>
+                <MenuItem x:Name="mitemClose" Header="종료" Click="mitemClose_Click"/>
+            </MenuItem>
+            <MenuItem Header="재생">
+                <MenuItem x:Name="mitemPlayPause" Header="재생" Click="mitemPlayPause_Click"/>
+                <MenuItem x:Name="mitemStop" Header="정지" Click="mitemStop_Click"/>
+                <MenuItem x:Name="mitemRec" Header="녹화시작" Click="mitemRec_Click"/>
+                <Separator/>
+                <MenuItem Header="재생속도">
+                    <MenuItem x:Name="mitemPlaySpeedNormal" Header="보통속도" InputGestureText="Z" Click="mitemPlaySpeedNormal_Click"/>
+                    <MenuItem x:Name="mitemPlaySpeedUp" Header="빠르게" InputGestureText="C" Click="mitemPlaySpeedUp_Click"/>
+                    <MenuItem x:Name="mitemPlaySpeedDown" Header="느리게" InputGestureText="X" Click="mitemPlaySpeedDown_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="mitemPlayDirection" Header="재생방향">
+                    <MenuItem x:Name="mitemPlayForward" Header="정방향 재생" IsCheckable="True" Checked="mitemPlayForward_Checked" InputGestureText="F"/>
+                    <MenuItem x:Name="mitemPlayBackward" Header="역방향 재생" IsCheckable="True" Checked="mitemPlayBackward_Checked" InputGestureText="D"/>
+                </MenuItem>
+                <MenuItem Header="프레임 재생">
+                    <MenuItem x:Name="mitemPlayNextFrame" Header="다음프레임" InputGestureText="S" Click="mitemPlayNextFrame_Click"/>
+                    <MenuItem x:Name="mitemPlayContinue" Header="정상재생" InputGestureText="A" Click="mitemPlayContinue_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="비디오">
+                <MenuItem x:Name="mitemAspectRatio" Header="영상비율">
+                    <MenuItem x:Name="mitemAspectRatioOriginal" Header="원본비율" IsCheckable="True" Checked="mitemAspectRatioOriginal_Checked" Unchecked="mitemAspectRatioOriginal_Unchecked"/>
+                    <MenuItem x:Name="mitemAspectRatioStretch" Header="화면비율" IsCheckable="True" Checked="mitemAspectRatioStretch_Checked" Unchecked="mitemAspectRatioStretch_Unchecked"/>
+                    <MenuItem x:Name="mitemAspectRatioClip" Header="화면에 맞게 자르기" IsCheckable="True" Checked="mitemAspectRatioClip_Checked" Unchecked="mitemAspectRatioClip_Unchecked"/>
+                </MenuItem>
+                <MenuItem Header="화면크기">
+                    <MenuItem x:Name="mitemWindowSize_0_5" Header="0.5 배" Click="mitemWindowSize_0_5_Click" InputGestureText="1"/> 
+                    <MenuItem x:Name="mitemWindowSize_1_0" Header="1.0 배" Click="mitemWindowSize_1_0_Click" InputGestureText="2"/> 
+                    <MenuItem x:Name="mitemWindowSize_1_5" Header="1.5 배" Click="mitemWindowSize_1_5_Click" InputGestureText="3"/>
+                    <Separator/>
+                    <MenuItem x:Name="mitemWindowToVideoSize" Header="비디오 크기에 맞추기" IsCheckable="True" Click="mitemWindowToVideoSize_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="mitemSnapshot" Header="스냅샷 찍기" Click="mitemSnapshot_Click"/>
+                <MenuItem Header="스케일링 방식">
+                    <MenuItem x:Name="mitemScaleDirectDraw" Header="DirectDraw" IsCheckable="True" Checked="mitemScaleDirectDraw_Checked"/>
+                    <MenuItem x:Name="mitemScaleFFMPEG" Header="FFMPEG" IsCheckable="True" Checked="mitemScaleFFMPEG_Checked"/>
+                </MenuItem>
+                <MenuItem x:Name="mitemDigitalZoom" Header="디지털줌 켜기" Click="mitemDigitalZoom_Click"/>
+            </MenuItem>
+            <MenuItem Header="도구">
+                <MenuItem Header="버퍼링">
+                    <MenuItem x:Name="mitemBufferingOn" Header="버퍼링 켜기" IsCheckable="True" Checked="mitemBufferingOn_Checked"/>
+                    <MenuItem x:Name="mitemBufferingOff" Header="버퍼링 끄기" IsCheckable="True" Checked="mitemBufferingOff_Checked"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="보기">
+                <MenuItem x:Name="mitemLogOutput" Header="로그출력">
+                    <MenuItem x:Name="mitemLogOutputDbgView" Header="디버그뷰" IsCheckable="True" Checked="mitemLogOutputDbgView_Checked"/>
+                    <MenuItem x:Name="mitemLogOutputConsole" Header="콘솔" IsCheckable="True" Checked="mitemLogOutputConsole_Checked"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="도움말">
+                <MenuItem x:Name="mitemAbout" Header="프로그램 정보" Click="mitemAbout_Click"/>
+            </MenuItem>
+        </Menu>
+        <WindowsFormsHost x:Name="axHost" Margin="0" Grid.Row="1"/>
+        <Slider x:Name="sliderTimeline" Margin="0" Grid.Row="2" ValueChanged="sliderTimeline_ValueChanged"
+                Thumb.DragStarted="sliderTimeline_DragStarted" Thumb.DragDelta="sliderTimeline_DragDelta" Thumb.DragCompleted="sliderTimeline_DragCompleted" 
+                PreviewMouseLeftButtonDown="sliderTimeline_PreviewMouseLeftButtonDown" MouseLeftButtonUp="sliderTimeline_MouseLeftButtonUp"
+                IsMoveToPointEnabled="true"/>
+        <DockPanel x:Name="dockControl" Grid.Row="3" Margin="5,5,5,5" LastChildFill="False">
+            <Button x:Name="btnPlayPause" DockPanel.Dock="Left" Width="32" Height="22" Click="btnPlayPause_Click">
+                <Image Source="/Images/icon_play.png"/>
+            </Button>
+            <Button x:Name="btnStop" DockPanel.Dock="Left" Width="32" Height="22" Margin="2,0,0,0" Click="btnStop_Click" ToolTip="정지">
+                <Image Source="/Images/icon_stop.png"/>
+            </Button>
+            <Button x:Name="btnRec" DockPanel.Dock="Left" Width="32" Height="22" Margin="2,0,0,0" Click="btnRec_Click">
+                <Image Source="/Images/icon_rec_start.png"/>
+            </Button>
+            <Label x:Name="lbPlayTime" Content="play time" DockPanel.Dock="Left" Width="140" Height="22" FontSize="11" Margin="2,0,0,0" FontWeight="Bold"/>
+            <Label x:Name="lbPlayDateTime" Content="play date time" DockPanel.Dock="Left" Width="120" Height="22" FontSize="11" Margin="2,0" FontWeight="Bold"/>
+            <Slider x:Name="sliderVolume" DockPanel.Dock="Right" Width="150" Height="22" IsMoveToPointEnabled="true" ValueChanged="sliderVolume_ValueChanged"/>
+            <Button x:Name="btnSound" DockPanel.Dock="Right" Width="20" Height="20" Margin="0,0,2,0" Click="btnSound_Click">
+                <Image Source="/Images/icon_sound.png"/>
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>
